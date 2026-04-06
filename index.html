@@ -3,26 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>fuguu</title>
+<title>rotluuu</title>
+
 <style>
-body { margin:0; font-family: Arial; background:black; color:white; text-align:center; overflow:hidden; }
-.page { display:none; height:100vh; justify-content:center; align-items:center; flex-direction:column; }
-.active { display:flex; }
-img { width:200px; border-radius:20px; }
-button { padding:10px 20px; margin-top:20px; border:none; border-radius:10px; cursor:pointer; }
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg, #ffd6e8, #ffe4f2);
+  color: #5a2a3a;
+  text-align: center;
+  overflow: hidden;
+}
+
+.page {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.active { display: flex; }
+
+img {
+  width: 200px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+  transition: 0.4s;
+}
+
+img:hover {
+  transform: scale(1.05) rotate(1deg);
+}
+
+h2 {
+  color: #ff4d88;
+  text-shadow: 0 0 10px rgba(255, 77, 136, 0.4);
+}
+
+/* BUTTONS */
+button {
+  padding: 12px 26px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(45deg, #ff9ecf, #ffb6d9);
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.7);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4), transparent);
+  transition: 0.5s;
+}
+
+button:hover::before {
+  top: 0;
+  left: 0;
+}
+
+button[onclick="handleYes()"] {
+  background: linear-gradient(45deg, #ff85c1, #ffc1e3);
+}
+
+#noBtn {
+  background: linear-gradient(45deg, #ff6fa5, #ff9ecf);
+}
+
+/* INPUT */
+input {
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ffb6d9;
+  outline: none;
+  margin-top: 10px;
+  text-align: center;
+}
+
+audio { margin-top: 15px; }
+
+/* FLOATING SPARKLES */
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity:1; }
+  100% { transform: translateY(-100vh); opacity:0; }
+}
+
+@keyframes fadeOut {
+  0% { opacity:1; transform:scale(1); }
+  100% { opacity:0; transform:scale(2); }
+}
 </style>
 </head>
+
 <body>
 
 <!-- Page 1 -->
 <div id="page1" class="page active">
-  <h2>panda please recognize its</h2>
+  <h2>Upload matching hand image 🤝</h2>
   <input type="file" id="imageInput">
 </div>
 
 <!-- Page 2 -->
 <div id="page2" class="page">
-  <h2>Heres a song for you fuguu</h2>
+  <h2>how's the song</h2>
   <img src="your-image.jpg" id="animatedImg">
   <audio controls>
     <source src="song.mp3" type="audio/mp3">
@@ -86,19 +190,20 @@ Piya Ishq Hai Piya
 Ishq Hai Piya
 Kesariya Tera Ishq Hai Piya
 
-Rang Jaaun Jo Main Hath Lagaun 🎶</p>
-  <button onclick="nextPage(3)">pandaa click Next</button>
+Rang Jaaun Jo Main Hath Lagaun</p>
+  <button onclick="nextPage(3)">Next</button>
 </div>
 
 <!-- Page 3 -->
 <div id="page3" class="page">
-  <h3><b> fuguu sorry for parva cha ,i was angry on myself not on you</b></b></h3>
+  <h2>Sorry Fuguu 🥺✨,my intensions were not to hurt you .i promise will not happen again </h2>
   <button onclick="nextPage(4)">Next</button>
 </div>
 
 <!-- Page 4 -->
 <div id="page4" class="page">
-  <h2>You mean a lot 💖🌸</h2>
+  <h2>and one thing bhanadaivha asel trr bhand pn asa bolaicha band kru nko fuguu ,evadhi cute distes ragat fuguuu .
+  asa vattay ki atha marte ke kyy ,pn cute trr distes te pn khuppppppp</h2>
   <button onclick="nextPage(5)">Next</button>
 </div>
 
@@ -118,6 +223,7 @@ Rang Jaaun Jo Main Hath Lagaun 🎶</p>
 <script>
 const correctImageName = "hand.png";
 
+/* IMAGE CHECK */
 document.getElementById("imageInput").addEventListener("change", function(e) {
   const file = e.target.files[0];
   if (file && file.name === correctImageName) {
@@ -127,21 +233,22 @@ document.getElementById("imageInput").addEventListener("change", function(e) {
   }
 });
 
+/* PAGE SWITCH */
 function nextPage(pageNumber) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.getElementById("page" + pageNumber).classList.add("active");
 }
 
-// YES button
+/* YES BUTTON */
 function handleYes() {
   document.getElementById("responseText").innerHTML = "Yayyy!!! 🥺💖✨";
 
-  // WhatsApp message
-  const phone = "7820943744"; // 👉 replace with your number
-  const message = encodeURIComponent("She said YES ❤️🥺✨");
+  // WhatsApp
+  const phone = "7820943744"; // replace
+  const message = encodeURIComponent("type your message ❤️🥺✨");
   window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 
-  // Celebration effect
+  // Sparkles
   for (let i = 0; i < 30; i++) {
     const spark = document.createElement("div");
     spark.innerHTML = "✨";
@@ -151,12 +258,11 @@ function handleYes() {
     spark.style.fontSize = "20px";
     spark.style.animation = "fadeOut 2s linear";
     document.body.appendChild(spark);
-
     setTimeout(() => spark.remove(), 2000);
   }
 }
 
-// NO button impossible to click 😈
+/* NO BUTTON ESCAPE 😈 */
 const noBtn = document.getElementById("noBtn");
 
 noBtn.addEventListener("mouseover", moveButton);
@@ -167,17 +273,21 @@ function moveButton() {
   noBtn.style.top = Math.random() * 80 + "vh";
 }
 
-// animation
-const style2 = document.createElement("style");
-style2.innerHTML = `
-@keyframes fadeOut {
-  0% { opacity:1; transform:scale(1); }
-  100% { opacity:0; transform:scale(2); }
+/* FLOATING EFFECT */
+function createSparkle() {
+  const el = document.createElement("div");
+  el.innerHTML = "✨";
+  el.style.position = "fixed";
+  el.style.left = Math.random() * 100 + "vw";
+  el.style.top = "100vh";
+  el.style.fontSize = "18px";
+  el.style.animation = "floatUp 4s linear";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 4000);
 }
-`;
-document.head.appendChild(style2);
+setInterval(createSparkle, 500);
 
-// image animation
+/* IMAGE ANIMATION */
 setInterval(() => {
   const img = document.getElementById("animatedImg");
   if (img) {
@@ -185,6 +295,7 @@ setInterval(() => {
     setTimeout(() => img.style.transform = "scale(1)", 500);
   }
 }, 1000);
+
 </script>
 
 </body>
